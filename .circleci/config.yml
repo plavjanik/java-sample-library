@@ -24,6 +24,7 @@ jobs:
       - restore_cache:
           keys:
             - sample-java-library-{{ checksum "build.gradle" }}
+      - run: git describe --tags
       - run: ./gradlew bintrayUpload
       - save_cache:
           paths:
