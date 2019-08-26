@@ -1,9 +1,9 @@
 version: 2.1
 jobs:
   build:
+    working_directory: ~/code
     docker:
       - image: circleci/openjdk:8-jdk
-    working_directory: ~/code
     steps:
       - checkout
       - restore_cache:
@@ -15,3 +15,38 @@ jobs:
             - ~/.gradle
             - ~/code/.gradle
           key: sample-java-library-{{ checksum "build.gradle" }}
+  publish:
+    working_directory: ~/code
+    docker:
+      - image: circleci/openjdk:8-jdk
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - sample-java-library-{{ checksum "build.gradle" }}
+      - run: ./gradlew bintrayUpload
+      - save_cache:
+          paths:
+            - ~/.gradle
+            - ~/code/.gradle
+          key: sample-java-library-{{ checksum "build.gradle" }}
+
+workflows:
+  version: 2
+  build-and-publish:
+    jobs:
+      # Execute job for all branches, and all tags
+      - build:
+          filters:
+            tags:
+              only: /.*/
+
+      # Execute job for no branches, and all tags
+      - publish:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore: /.*/
