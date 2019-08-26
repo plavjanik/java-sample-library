@@ -20,7 +20,20 @@ repositories {
     jcenter()
 }
 
-version "$projectVersion"
+def getVersionNameFromGitTag = { ->
+  try {
+    def stdout = new ByteArrayOutputStream()
+    exec {
+      commandLine 'git', 'describe', '--abbrev=0', '--tags'
+      standardOutput = stdout
+    }
+    return stdout.toString().trim()
+  } catch (ignored) {
+    return null
+  }
+}
+
+version getVersionNameFromGitTag() ?: defaultVersion
 
 dependencies {
     // This dependency is exported to consumers, that is to say found on their compile classpath.
