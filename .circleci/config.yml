@@ -6,4 +6,12 @@ jobs:
     working_directory: ~/code
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - sample-java-library-{{ checksum "build.gradle" }}
       - run: ./gradlew build
+      - save_cache:
+          paths:
+            - ~/.gradle
+            - ~/code/.gradle
+          key: sample-java-library-{{ checksum "build.gradle" }}
