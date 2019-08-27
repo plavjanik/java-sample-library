@@ -28,6 +28,7 @@ publishing {
     publications {
         mavenPublication(MavenPublication) {
             from components.java
+            groupId 'net.plavjanik.sample'
             artifactId artifactId
 
             pom {
