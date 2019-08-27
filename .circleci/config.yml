@@ -15,7 +15,8 @@ jobs:
             - ~/.gradle
             - ~/code/.gradle
           key: sample-java-library-{{ checksum "build.gradle" }}
-  publish:
+
+  build_and_upload:
     working_directory: ~/code
     docker:
       - image: circleci/openjdk:8-jdk
@@ -25,7 +26,7 @@ jobs:
           keys:
             - sample-java-library-{{ checksum "build.gradle" }}
       - run: git describe --tags
-      - run: ./gradlew bintrayUpload
+      - run: ./gradlew build bintrayUpload
       - save_cache:
           paths:
             - ~/.gradle
@@ -34,20 +35,12 @@ jobs:
 
 workflows:
   version: 2
-  build-and-publish:
+  untagged_build:
     jobs:
-      # Execute job for all branches, and all tags
-      - build:
+      - build
+  tagged_build:
+    jobs:
+      - build_and_upload:
           filters:
             tags:
               only: /.*/
-
-      # Execute job for no branches, and all tags
-      - publish:
-          requires:
-            - build
-          filters:
-            tags:
-              only: /.*/
-            branches:
-              ignore: /.*/
