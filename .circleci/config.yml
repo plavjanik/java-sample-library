@@ -37,7 +37,10 @@ workflows:
   version: 2
   untagged_build:
     jobs:
-      - build
+      - build:
+          filters:
+            tags:
+              ignore: /.*/
   tagged_build:
     jobs:
       - build_and_upload:
