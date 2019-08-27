@@ -1,6 +1,15 @@
 # Java Sample Library
 
+[ ![Download](https://api.bintray.com/packages/plavjanik/zowe/java-sample-library/images/download.svg) ](https://bintray.com/plavjanik/zowe/java-sample-library/_latestVersion)
+
 Sample Java library that is published to Bintray.
+
+## Creating new version
+
+```bash
+git tag 0.2.1
+git push --follow-tags
+```
 
 ## Publising to Maven Local
 
@@ -22,12 +31,9 @@ plugins {
 repositories {
     mavenLocal()
     jcenter()
-    maven {
-        url  "https://dl.bintray.com/plavjanik/zowe"
-    }
 }
 
 dependencies {
-    implementation 'net.plavjanik.sample:java-sample-library:0.1.8'
+    implementation 'net.plavjanik.sample:java-sample-library:0.2.1'
 }
 ```
