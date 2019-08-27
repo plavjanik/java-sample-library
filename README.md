@@ -1,14 +1,14 @@
 # Java Sample Library
 
-[ ![Download](https://api.bintray.com/packages/plavjanik/zowe/java-sample-library/images/download.svg) ](https://bintray.com/plavjanik/zowe/java-sample-library/_latestVersion)
+[![Download](https://api.bintray.com/packages/plavjanik/zowe/java-sample-library/images/download.svg)](https://bintray.com/plavjanik/zowe/java-sample-library/_latestVersion)
 
 Sample Java library that is published to Bintray.
 
 ## Creating new version
 
 ```bash
-git tag 0.2.1
-git push --follow-tags
+git tag v0.2.1
+git push origin v0.2.1
 ```
 
 ## Publising to Maven Local
